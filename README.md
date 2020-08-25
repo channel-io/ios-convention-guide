@@ -56,10 +56,47 @@
   
 ## 접근자 규칙
 
-- class 내부에서만 쓰이는 변수는 private으로 명시해줍니다.
+- class 내부에서만 쓰이는 변수는 `private`으로 명시해줍니다.
 
   ```swift
     fianl class ChannelViewController {
+      private var count = 0
       ...
     }
+  
+## 함수정의 줄내림 규칙
+
+- 함수 정의가 길 경우 다음과 같이 줄내림 합니다.
+
+  ```swift
+    // Preferred
+    func ChannelFunction(
+      a: String,
+      b: Int,
+      c: Member
+    ){
+      ...
+    }
+    
+    // Not Preferred
+    func ChannelFunction(
+      a: String,
+      b: Int,
+      c: Member){
+      ...
+    }
+  ```
+  
+## Array 선언 규칙
+
+- Array를 선언할 때는 다음과 같은 포맷을 지향합니다.
+
+  ```swift
+    // Preferred
+    var managers: [Manager] = []
+    var counts: [String:Int] = [:]
+    
+    // NOt Preferred
+    var manager = [Manager]()
+    var counts = [String:Int]()
   ```
