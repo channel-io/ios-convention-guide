@@ -3,6 +3,8 @@
 해당 문서는 **채널톡** ios팀 멤버들의 swift code convention을 맞추기 위해서 작성되었습니다. 팀원들의 합의에 따라서 언제든 바뀔 수 있으며, 가능한 해당 컨벤션을 맞춰주세요.
 가능하다면 컨벤션 관련 코드리뷰때는 해당 깃헙에서 항목의 링크를 붙여주면 커뮤니케이션에 좋습니다.
 
+다음 Reference들을 참고하여 맞게 수정하여 만들어졌습니다.([StyleShare](https://github.com/StyleShare/swift-style-guide), [raywenderlich](https://github.com/raywenderlich/swift-style-guide))
+
 ## TODO 리스트
 - [ ] 현재까지 코드 컨벤션 추가하기
 - [ ] 종류별로 구분, 순서 정리 및 목차 설정하기
