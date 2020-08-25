@@ -1,7 +1,7 @@
 # IOS Code Convention Giuide(Swift)
 
 해당 문서는 **채널톡** ios팀 멤버들의 swift code convention을 맞추기 위해서 작성되었습니다. 팀원들의 합의에 따라서 언제든 바뀔 수 있으며, 가능한 해당 컨벤션을 맞춰주세요.
-가능하다면 컨벤션 관련 코드리뷰때는 해당 깃헙에서 항목의 링크를 붙여주면 커뮤니케이션에 좋습니다.
+또한 컨벤션 관련 코드리뷰때는 해당 깃헙에서 항목의 링크를 붙여주면 커뮤니케이션에 좋습니다.
 
 다음 Reference들을 참고하여 맞게 수정하여 만들어졌습니다.([StyleShare](https://github.com/StyleShare/swift-style-guide), [raywenderlich](https://github.com/raywenderlich/swift-style-guide))
 
@@ -52,7 +52,7 @@
 - 더이상 상속이 일어나지 않는 class는 `final`을 붙여서 명시해줍니다.
   
   ```swift
-    fianl class ChannelViewController {
+    final class ChannelViewController {
       ...
     }
   ```
@@ -93,9 +93,9 @@
   
 ### Snapkit 관련 규칙
 
-- superView에 대해서는 inset을, 다른 뷰에 대해서는 offset을 지향해주세요.
+- superView에 대해서는 `inset`을, 다른 뷰에 대해서는 `offset`을 지향해주세요.
 - layout warning이 나면 모두 없애주시길 바랍니다.
-- right, left보단 leading, trailing을 사용해주세요.
+- `right`, `left`보단 `leading`, `trailing`을 사용해주세요.
 
   ```swift
     // Preferred
@@ -318,7 +318,7 @@
   
 ### 메모리 관리 규칙
 
-- Retain cycle이 발생하지 않도록 weak self를 이용합니다. 필요하다면 guard let self = self else 를 통해서 unwrapping을 해줍니다.
+- Retain cycle이 발생하지 않도록 `weak self`를 이용합니다. 필요하다면 `guard let self = self else`를 통해서 unwrapping을 해줍니다.
 
   ```swift
     self.closePopup() { [weak self] _ in
