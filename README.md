@@ -385,3 +385,18 @@
     })
   ```
 
+### unwrapping 규칙
+
+- 최대한 force unwrapping은 피해줍니다. 옵셔널(`?`)의 경우는 optional chaining 등으로 풀어서 사용해주시고 `!`는 최대한 피해줍니다.
+
+  ```swift
+    // Preferred
+    { manager, user in
+      ...
+    }
+
+    // Not Preferred
+    { (manager, user) in
+      ...
+    }
+  ```
