@@ -151,6 +151,46 @@
     }
   ```
   
+### Metric 명명 규칙
+
+- Metric은 다음과 같은 규칙을 따릅니다.
+    - 상수로서의 의미로 계산의 편의를 위해 양수로 지정합니다.(아래쪽 코드에서 -를 붙여줍니다.)
+    
+  ```swift
+    private enum Metric {
+      static let imageViewTop = 3.f
+    }
+    // Preferred
+    self.imageView.snp.makeConstraints { make in
+      make.top.equalToSuperview().inset(-imageTop)
+    }
+  ```
+  
+  - 뷰들관의 관계를 명명에 표현하지 않습니다.
+  - 해당 뷰에 대해 뷰이름(선언한 변수명)을 prefix, (Top, Bottom, Leading, Trailing, center, centerX, centerY, Edge, Length, Width, Height)을 postfix로 붙여 나타내줍니다.  
+  - Padding, Margin, Inset, Offset 이라는 단어는 붙이지않습니다.
+  - 두가지를 한번에 명명할때는 (Top -> Bottom -> Leading -> Trailing) 4개만 해당 순서대로 묶어서 표현하며, 4개에 모두 사용될시 Edge를 사용합니다.
+  - 가로 세로 길이가 같다면 Size 대신에 Length로 표현해줍니다. 가로 세로길이가 다르다면 Width, Height로 합니다.
+  
+  ```swift
+    // Preferred
+    private enum Metric {
+      static let imageViewTop = 3.f
+      static let nameLabelTopBottom = 3.f
+      static let avatarViewTopLeading = 3.f
+      static let textViewLeadingTrailing = 3.f
+      static let iamgeViewEdge = 6.f
+      static let imageViewLength = 7.f
+    }
+    
+    // Not Preferred
+    private enum Metric {
+      static let imageViewNameLabelMargin = 3.f
+      static let imageViewTopBottomLeadingTrailing = 3.f
+      static let imageViewSize = 7.f
+    }
+  ```
+  
 ### 조건문 줄내림 규칙
 
 - `if` 나 `guard`에서 조건문이 여러개인 경우 줄이 길면 다음과 같이 줄내림 해줍니다.
