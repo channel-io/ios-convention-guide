@@ -47,6 +47,18 @@
     }
   ```
   
+- `guard`가 끝난 이후, 한 줄 띄우고 코드를 작성합니다.
+
+    ```swift
+    guard let count = count else { return }
+    
+    if count > 0 {
+      ...
+    } else {
+      ...
+    }
+  ```
+  
 ### final 규칙
   
 - 더이상 상속이 일어나지 않는 class는 `final`을 붙여서 명시해줍니다.
