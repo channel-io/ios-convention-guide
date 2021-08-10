@@ -1,14 +1,33 @@
-# IOS Code Convention Giuide(Swift)
+# iOS Code Convention Guide(Swift)
 
-해당 문서는 **채널톡** ios팀 멤버들의 swift code convention을 맞추기 위해서 작성되었습니다. 팀원들의 합의에 따라서 언제든 바뀔 수 있으며, 가능한 해당 컨벤션을 맞춰주세요.
+해당 문서는 **채널톡** iOS 멤버들의 swift code convention을 맞추기 위해서 작성되었습니다. 팀원들의 합의에 따라서 언제든 바뀔 수 있으며, 가능한 해당 컨벤션을 맞춰주세요.
 또한 컨벤션 관련 코드리뷰때는 해당 깃헙에서 항목의 링크를 붙여주면 커뮤니케이션에 좋습니다.
 
-다음 Reference들을 참고하여 맞게 수정하여 만들어졌습니다.([StyleShare](https://github.com/StyleShare/swift-style-guide), [raywenderlich](https://github.com/raywenderlich/swift-style-guide))
+다음 Reference들을 참고하고, 수정해서 만들어졌습니다.([StyleShare](https://github.com/StyleShare/swift-style-guide), [raywenderlich](https://github.com/raywenderlich/swift-style-guide))
 
 ## TODO 리스트
 - [ ] 현재까지 코드 컨벤션 추가하기
-- [ ] 종류별로 구분, 순서 정리 및 목차 설정하기
 - [ ] What is next?
+
+## 목차
+[한줄 최대 길이](#한-줄-최대-길이)</br>
+[Guard 규칙](#Guard-규칙)</br>
+[final 규칙](#final-규칙) </br>
+[접근자 규칙](#접근자-규칙)</br>
+[함수정의 줄내림 규칙](#함수정의-줄내림-규칙)</br>
+[Snapkit 관련 규칙](#Snapkit-관련-규칙) </br>
+[상수 선언 규칙](#상수-선언-규칙)</br>
+[Metric 명명 규칙](#Metric-명명-규칙)</br>
+[조건문 줄내림 규칙](#조건문-줄내림-규칙) </br>
+[연산자 줄내림 규칙](#연산자-줄내림-규칙)</br>
+[삼항연산자 규칙](#삼항연산자-규칙)</br>
+[self 규칙](#self-규칙) </br>
+[Array 선언 규칙](#Array-선언-규칙) </br>
+[들여쓰기 규칙](#들여쓰기-규칙)</br>
+[이니셜라이징 규칙](#이니셜라이징-규칙)</br>
+[메모리 관리 규칙](#메모리-관리-규칙) </br>
+[클로저 사용 규칙](#클로저-사용-규칙)</br>
+[Unwrapping 규칙](#Unwrapping-규칙)</br>
 
 ## 코드 컨벤션
 
@@ -124,6 +143,7 @@
   ```
 
 ### 상수 선언 규칙
+
 - 아래에 해당되는 값들은 class 아래 다음과 같이 따로 빼서 정리합니다.
   다른 class 에서 사용되지않는다면 `private`를 꼭 붙입니다.
   일반적인 상수를 단순히 정의할때는 `struct` 대신 `enum`을 사용해줍니다.
@@ -162,7 +182,23 @@
       ...
     }
   ```
+- Localize 상수는 기존 상수 규칙과 다르게, enum - case로 정리합니다. 규칙은 다음과 같습니다.
+   ```swift
+   private enum Localized {
+    case leavedThread
+    case managersCount(String)
+    ...
   
+    var rawValue: String {
+      switch self {
+        case .leaveThread: return "thread.header.leave_thread".localized
+        case .managersCount(let count): return "team_chat_info.manager_list.title".localized(with: count)
+        ...
+      }
+    }
+  }
+  ```
+
 ### Metric 명명 규칙
 
 - Metric은 다음과 같은 규칙을 따릅니다.
