@@ -33,8 +33,8 @@
 
 ### 한 줄 최대 길이
 
-- 한 줄은 최대 99자를 넘지 않도록 합니다.
-- Xcode에서 **Preferences -> Text Editing -> Display -> Page guide at column** 부분을 99로 설정해서 사용해주세요.
+- 한 줄은 최대 120자를 넘지 않도록 합니다.
+- Xcode에서 **Preferences -> Text Editing -> Display -> Page guide at column** 부분을 120로 설정해서 사용해주세요.
 
 ### Guard 규칙
 
