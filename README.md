@@ -124,7 +124,7 @@
   
 ### Snapkit 관련 규칙
 
-- superView에 대해서는 `inset`을, 다른 뷰에 대해서는 `offset`을 지향해주세요.
+- superView, safeArea에 대해서는 `inset`을, 다른 뷰에 대해서는 `offset`을 지향해주세요.
 - layout warning이 나면 모두 없애주시길 바랍니다.
 - `right`, `left`보단 `leading`, `trailing`을 사용해주세요.
 
