@@ -94,7 +94,7 @@
 - `fileprivate`는 필요한 경우가 아니면 피하고, `private`으로 써줍니다.
 
   ```swift
-    fianl class ChannelViewController {
+    final class ChannelViewController {
       private var count = 0
       ...
     }
@@ -130,15 +130,15 @@
 
   ```swift
     // Preferred
-    self.channelView.snp.makeConstraints { make in
-      make.leading.equalToSuperview().inset(xMargin)
-      make.traling.equalToSuperview().inset(xMargin)
+    self.channelView.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(xMargin)
+      $0.traling.equalToSuperview().inset(xMargin)
     }
     
     // Not Preferred
-    self.channelView.snp.makeConstraints { make in
-      make.left.equalToSuperview().offset(-xMargin)
-      make.right.equalToSuperview().offset(xMargin)
+    self.channelView.snp.makeConstraints {
+      $0.left.equalToSuperview().offset(-xMargin)
+      $0.right.equalToSuperview().offset(xMargin)
     }
   ```
 
@@ -209,8 +209,8 @@
       static let imageViewTop = 3.f
     }
     
-    self.imageView.snp.makeConstraints { make in
-      make.top.equalToSuperview().inset(-imageTop)
+    self.imageView.snp.makeConstraints {
+      $0.top.equalToSuperview().inset(-imageTop)
     }
   ```
   
@@ -384,11 +384,11 @@
   ```swift
     // Preferred
     var managers: [Manager] = []
-    var counts: [String:Int] = [:]
+    var counts: [String: Int] = [:]
     
     // Not Preferred
     var manager = [Manager]()
-    var counts = [String:Int]()
+    var counts = [String: Int]()
   ```
   
 ### 들여쓰기 규칙
@@ -463,15 +463,15 @@
 - 클로져 밖의 괄호는 가능한 생략해 줍니다.
   ```swift
     // Preferred
-    self.channelView.snp.makeConstraints { make in
-      make.leading.equalToSuperview().inset(xMargin)
-      make.traling.equalToSuperview().inset(xMargin)
+    self.channelView.snp.makeConstraints {
+      $0.leading.equalToSuperview().inset(xMargin)
+      $0.traling.equalToSuperview().inset(xMargin)
     }
     
     // Not Preferred
-    self.channelView.snp.makeConstraints ({ make in
-      make.left.equalToSuperview().offset(-xMargin)
-      make.right.equalToSuperview().offset(xMargin)
+    self.channelView.snp.makeConstraints ({
+      $0.left.equalToSuperview().offset(-xMargin)
+      $0.right.equalToSuperview().offset(xMargin)
     })
   ```
 
