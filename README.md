@@ -210,7 +210,7 @@
     }
     
     self.imageView.snp.makeConstraints {
-      $0.top.equalToSuperview().inset(-imageTop)
+      $0.top.equalToSuperview().inset(-Metric.imageViewTop)
     }
   ```
   
