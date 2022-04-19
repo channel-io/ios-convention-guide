@@ -132,7 +132,7 @@
     // Preferred
     self.channelView.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(xMargin)
-      $0.traling.equalToSuperview().inset(xMargin)
+      $0.trailing.equalToSuperview().inset(xMargin)
     }
     
     // Not Preferred
@@ -465,7 +465,7 @@
     // Preferred
     self.channelView.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(xMargin)
-      $0.traling.equalToSuperview().inset(xMargin)
+      $0.trailing.equalToSuperview().inset(xMargin)
     }
     
     // Not Preferred
