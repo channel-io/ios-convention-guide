@@ -42,26 +42,44 @@
 - `guard ~ else` 문이 한줄에 써진다면, 한줄로 둔다
 
   ```swift
-    guard let count = count else { return }
+    // Preferred
+    var name: String?
+    guard let name else { return }
+  
+    // Not Preffered
+    var name: String?
+    guard let name = name else { return }
   ```
   
 - `guard`의 condition이 하나이고, `else`가 여러줄이라면 다음과 같이 사용합니다.
 
   ```swift
-    guard let count = count else {
+    guard let count else {
       ....
       return
     }
   ```
   
-- `guard`의 condition이 여러개라면 다음과 같이 사용합니다.
+- `guard`의 condition이 여러개라면 다음과 같이 사용합니다. ( 단, 최대 한줄로 작성이 가능한 경우는 한줄로 작성합니다.  )
 
   ```swift
-    guard 
-      let count = count,
-      count > 0 
-    else {
+    // Preferred  
+    guard let count, count > 0  else {
       ....
+      return
+    }
+  
+    guard 
+      let interactor = self.basicInteractor,
+      let router = self.basicRouter,
+      let view = self.basicView
+    else { return }
+  
+    // Not Preffered
+    guard let interactor = self.basicInteractor,
+      let router = self.basicRouter,
+      let view = self.basicView
+    else {
       return
     }
   ```
@@ -69,7 +87,7 @@
 - `guard`가 끝난 이후, 한 줄 띄우고 코드를 작성합니다.
 
     ```swift
-    guard let count = count else { return }
+    guard let count else { return }
     
     if count > 0 {
       ...
@@ -78,8 +96,23 @@
     }
   ```
   
-### final 규칙
+- `guard`가 중간에 오는 경우, 위 아래로 한줄씩 띄우고 코드를 작성합니다.
+
+    ```swift
+    let count: Int? = 0
+    
+    guard let count else { return }
+    
+    if count > 0 {
+      ...
+    } else {
+    ...
+  }
+  ```
   
+  
+### final 규칙
+
 - 더이상 상속이 일어나지 않는 class는 `final`을 붙여서 명시해줍니다.
   
   ```swift
@@ -109,7 +142,7 @@
       a: String,
       b: Int,
       c: Member
-    ){
+    ) {
       ...
     }
     
@@ -117,7 +150,7 @@
     func ChannelFunction(
       a: String,
       b: Int,
-      c: Member){
+      c: Member) {
       ...
     }
   ```
@@ -134,11 +167,19 @@
       $0.leading.equalToSuperview().inset(xMargin)
       $0.trailing.equalToSuperview().inset(xMargin)
     }
+  
+    self.channelView.snp.makeConstraints {
+      $0.directionalEdges().inset(xMargin)
+    }
     
     // Not Preferred
     self.channelView.snp.makeConstraints {
       $0.left.equalToSuperview().offset(-xMargin)
       $0.right.equalToSuperview().offset(xMargin)
+    }
+  
+    self.channelView.snp.makeConstraints {
+      $0.edges().inset(xMargin)
     }
   ```
 
@@ -188,7 +229,7 @@
     case leavedThread
     case managersCount(String)
     ...
-  
+    
     var rawValue: String {
       switch self {
         case .leaveThread: return "thread.header.leave_thread".localized
@@ -353,7 +394,7 @@
     // Not Preferred
     check == true ? self.showSuccess() : self.showFail()
   ```
- 
+
 - 삼항 연산자가 너무 길어질 경우 가독성을 위해 분리해줍니다.
 
   ```swift
@@ -372,7 +413,7 @@
       : e
       : f
   ```
- 
+
 ### self 규칙
 
 - 클래스와 구조체 내부에서는 `self`를 명시적으로 표시해줍니다.
@@ -387,7 +428,7 @@
     var counts: [String: Int] = [:]
     
     // Not Preferred
-    var manager = [Manager]()
+    var managers = [Manager]()
     var counts = [String: Int]()
   ```
   
@@ -412,8 +453,8 @@
 
   ```swift
     self.closePopup() { [weak self] _ in
-      guard let self = self else { return }
-
+      guard let self else { return }
+  
       self.popAllController()
     }
   ```
@@ -427,7 +468,7 @@
     { manager, user in
       ...
     }
-
+  
     // Not Preferred
     { (manager, user) in
       ...
@@ -487,7 +528,7 @@
       }
      ...
     }
-
+  
     // Not Preferred
     func getResultText(with text: String?) -> String {
       return text!
