@@ -158,31 +158,42 @@
 
 ### Enum 줄내림 규칙
 
-- 모든 `case` 내의 코드가 한 줄이라면 다음과 같이 줄내림 없이 사용합니다. ( 단, return 의 경우 `case` 옆에 붙여서 사용할 수 있습니다. )
+- 모든 `case` 내의 코드가 한줄이고 return 문이라면 붙여서 사용합니다.
   ```swift
-  // Preferrd
+  // Preferred
   switch bubbleOption {
   case .top:
-    print("top")
+    return 10.f
   case .bottom:
-    print("bottom")
+    return 20.f
   }
 
-  // Preferrd
+  // Preferred
   switch bubbleOption {
   case .top: return 10.f
   case .bottom: return 20.f
   }
   ```
 
-- `case` 내의 코드가 여러줄이라면 다음과 같이 모두 줄내림 합니다.
+- 그 외의 경우는 다음과 같이 모두 줄내림 합니다.
   ```swift
+  // Preferred
   switch action {
   case .routeHome:
     guard state.routes.count != 0 else { return }
 
     state.routes.append(.home)
 
+  case .routeFeed:
+    state.routes.append(.feed)
+  }
+
+  // Not Preferred
+    switch action {
+  case .routeHome:
+    guard state.routes.count != 0 else { return }
+
+    state.routes.append(.home)
   case .routeFeed:
     state.routes.append(.feed)
   }
