@@ -173,6 +173,14 @@
   case .top: return 10.f
   case .bottom: return 20.f
   }
+
+  // Not Preferred
+  switch action {
+  case .top:
+    print("top")
+  case .bottom:
+    print("bottom")
+  }
   ```
 
 - 그 외의 경우는 다음과 같이 모두 줄내림 합니다.
@@ -189,7 +197,7 @@
   }
 
   // Not Preferred
-    switch action {
+  switch action {
   case .routeHome:
     guard state.routes.count != 0 else { return }
 
