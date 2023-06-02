@@ -20,6 +20,7 @@
 [Metric 명명 규칙](#Metric-명명-규칙)</br>
 [조건문 줄내림 규칙](#조건문-줄내림-규칙) </br>
 [연산자 줄내림 규칙](#연산자-줄내림-규칙)</br>
+[super 함수 호출시 줄내림 규칙](#super-함수-호출시-줄내림-규칙)</br>
 [삼항연산자 규칙](#삼항연산자-규칙)</br>
 [self 규칙](#self-규칙) </br>
 [Array 선언 규칙](#Array-선언-규칙) </br>
@@ -28,6 +29,10 @@
 [메모리 관리 규칙](#메모리-관리-규칙) </br>
 [클로저 사용 규칙](#클로저-사용-규칙)</br>
 [Unwrapping 규칙](#Unwrapping-규칙)</br>
+[Subview 추가 규칙](#Subview-추가-규칙)</br>
+[자주 사용되는 값 체크에 확장 변수 사용하기](#자주-사용되는-값-체크에-확장-변수-사용하기)</br>
+[RxSwift 스케쥴러 지정 규칙](#RxSwift-스케쥴러-지정-규칙)</br>
+[VIPER 모듈 사이의 콜백 전달 규칙](#VIPER-모듈-사이의-콜백-전달-규칙)</br>
 
 ## 코드 컨벤션
 
@@ -160,6 +165,9 @@
 - superView, safeArea에 대해서는 `inset`을, 다른 뷰에 대해서는 `offset`을 지향해주세요.
 - layout warning이 나면 모두 없애주시길 바랍니다.
 - `right`, `left`보단 `leading`, `trailing`을 사용해주세요.
+- 상위 뷰와 관계를 설정할 때는 `equalToSuperview()`를 사용해주세요.
+- 동적으로 레이아웃을 변경해야 할 때는 별개의 `Constraint` 참조를 생성하기보다는 해당 뷰에 대한 `updateConstraints` 함수를 호출해서 수정해주세요.
+
 
   ```swift
     // Preferred
@@ -171,7 +179,11 @@
     self.channelView.snp.makeConstraints {
       $0.directionalEdges().inset(xMargin)
     }
-    
+
+    self.channelView.snp.updateConstraints {
+      $0.bottom.equalToSuperview().inset(keyboardHeight)
+    }
+
     // Not Preferred
     self.channelView.snp.makeConstraints {
       $0.left.equalToSuperview().offset(-xMargin)
@@ -181,6 +193,13 @@
     self.channelView.snp.makeConstraints {
       $0.edges().inset(xMargin)
     }
+
+    var constraint: Constraint?
+    ...
+    self.channelView.snp.makeConstraints {
+      constraint = $0.bottom.equalToSuperview().inset(0).constraint
+    }
+    constraint?.update(inset: 10)
   ```
 
 ### 상수 선언 규칙
@@ -343,7 +362,23 @@
       isValid && 
       text.count > 5
   ```
-  
+### super 함수 호출시 줄내림 규칙
+- 어떤 클래스를 상속하는 클래스가 super의 함수를 호출할 때 바로 아래에 빈 라인을 추가합니다.
+
+  ```swift
+    // Preferred
+    override func viewDidLoad() {
+      super.viewDidLoad()
+
+      self.callSomeFunction()
+    }
+
+    // Not Preferred
+    override func viewDidLoad() {
+      super.viewDidLoad()
+      self.callSomeFunction()
+    }
+  ```
 ### 삼항연산자 규칙
 
 - `if ~ else`로 묶인 `return` 또는 값대입인 경우 삼항연산자로 줄일 수 있으면 줄여줍니다.
@@ -533,5 +568,98 @@
     func getResultText(with text: String?) -> String {
       return text!
      ...
+    }
+  ```
+### Subview 추가 규칙
+
+- `UIView`나 `UIStackView`에 복수의 하위 뷰를 추가할 때 되도록이면 `addSubviews`, `addArrangedSubviews`를 사용합니다.
+
+  ```swift
+    // Preferred 
+    self.containerView.addSubviews(self.titleView, self.imageView)
+    self.stackView.addArrangedSubviews(self.topView, self.bottomView)
+
+    // Not Preferred
+    self.containerView.addSubview(self.titleView)
+    self.containerView.addSubview(self.imageView)
+    self.stackView.addArrangedSubviews(self.topView)
+    self.stackView.addArrangedSubviews(self.bottomView)
+  ```
+
+### 자주 사용되는 값 체크에 확장 변수 사용하기
+
+- `nil`이나 `0`과 같은 값을 체크할 때 정의된 확장 변수가 있다면 등호/부등호를 사용하는 대신 해당 확장 변수를 사용합니다.
+
+  ```swift
+    // Preferred
+    if optionalValue.isNil { ... }
+    if optionalValue.isNotNil { ... }
+    if numberValue.isZero { ... }
+    if optionalBoolValue.beTrue { ... }
+    if optionalBoolValue.beFalse { ... }
+
+    // Not Preferred
+    if optionalValue == nil { ... }
+    if optionalValue != nil { ... }
+    if numberValue == 0 { ... }
+    if optionalBoolValue == true { ... }
+    if optionalBoolValue == false { ... }
+  ```
+
+### RxSwift 스케쥴러 지정 규칙
+- `Observable`에 대해서 `subscribe(on:)`과 `observe(on:)` 함수를 호출해 어떤 어떤 스케쥴러에서 작동할지 지정할 수 있는데, 이를 `Observable`을 생성하는 곳이 아닌 생성된 `Observable`을 사용하는 곳에서 지정합니다.
+- 자세한 내용은 ["SubscribeOn / ObserveOn 논의 정리"](https://www.notion.so/channelio/SubscribeOn-ObserveOn-dfd918eee039412ea3ac9d72d3da08fd?pvs=4)를 확인해주세요.
+
+  ```swift
+    // Preferred
+    func someObservable() -> Observable<Void> { ... }
+
+    someObservable()
+      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+      .observe(on: MainScheduler.instance)
+      .subscribe { _ in 
+        ...
+      }
+
+    // Not Preferred
+    Observable
+      .create { ... }
+      .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+      .observe(on: MainScheduler.instance)
+    ...
+  ```
+
+### VIPER 모듈 사이의 콜백 전달 규칙
+- VIPER 모듈이 다른 VIPER 모듈을 생성하면서 생성한 모듈로부터 어떤 동작이 완료되었다는 콜백을 받고 싶을 때, 이를 클로져를 사용하기보다는 `PublishRelay`, `PublishSubject`와 같은 옵저버 타입을 전달하도록 합니다.
+
+  ```swift
+    // Preferred
+    extension CreateValueRouter {
+      static func createModule(createValueSignal: PublishRelay<Value>) {
+        ...
+      }
+    }
+
+    class CreateValueModuleClass {
+      var createValueSignal: PublishRelay<Value>?
+      ...
+      func valueCreated(_ value: Value) {
+        self.createValueSignal?.accept(value)
+      }
+    }
+
+    // Not Preferred
+    extension CreateValueRouter {
+      static func createModule(valueCreated: (Value) -> Void) {
+        ...
+      }
+    }
+
+    class CreateValueModuleClass {
+      var valueCreated: ((Value) -> Void)?
+      ...
+      func valueCreated(_ value: Value) {
+        self.valueCreated?(value)
+      }
     }
   ```
