@@ -15,6 +15,7 @@
 [final 규칙](#final-규칙) </br>
 [접근자 규칙](#접근자-규칙)</br>
 [함수정의 줄내림 규칙](#함수정의-줄내림-규칙)</br>
+[Enum 줄내림 규칙](#Enum-줄내림-규칙) </br>
 [Snapkit 관련 규칙](#Snapkit-관련-규칙) </br>
 [상수 선언 규칙](#상수-선언-규칙)</br>
 [Metric 명명 규칙](#Metric-명명-규칙)</br>
@@ -158,6 +159,57 @@
       c: Member) {
       ...
     }
+  ```
+
+### Enum 줄내림 규칙
+
+- 모든 `case` 내의 코드가 한줄이고 return 문이라면 붙여서 사용합니다.
+  ```swift
+  // Preferred
+  switch bubbleOption {
+  case .top:
+    return 10.f
+  case .bottom:
+    return 20.f
+  }
+
+  // Preferred
+  switch bubbleOption {
+  case .top: return 10.f
+  case .bottom: return 20.f
+  }
+
+  // Not Preferred
+  switch action {
+  case .top:
+    print("top")
+  case .bottom:
+    print("bottom")
+  }
+  ```
+
+- 그 외의 경우는 다음과 같이 모두 줄내림 합니다.
+  ```swift
+  // Preferred
+  switch action {
+  case .routeHome:
+    guard state.routes.count != 0 else { return }
+
+    state.routes.append(.home)
+
+  case .routeFeed:
+    state.routes.append(.feed)
+  }
+
+  // Not Preferred
+  switch action {
+  case .routeHome:
+    guard state.routes.count != 0 else { return }
+
+    state.routes.append(.home)
+  case .routeFeed:
+    state.routes.append(.feed)
+  }
   ```
   
 ### Snapkit 관련 규칙
