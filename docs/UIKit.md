@@ -6,8 +6,6 @@
 [Metric 명명 규칙](#Metric-명명-규칙)</br>
 [super 함수 호출시 줄내림 규칙](#super-함수-호출시-줄내림-규칙)</br>
 [View property 이니셜라이징 규칙](#View-property-이니셜라이징-규칙)</br>
-[클로저 사용 규칙](#클로저-사용-규칙)</br>
-[Unwrapping 규칙](#Unwrapping-규칙)</br>
 [Subview 추가 규칙](#Subview-추가-규칙)</br>
 
 ## 코드 컨벤션
@@ -52,63 +50,6 @@
       constraint = $0.bottom.equalToSuperview().inset(0).constraint
     }
     constraint?.update(inset: 10)
-  ```
-
-### 상수 선언 규칙
-
-- 아래에 해당되는 값들은 class 아래 다음과 같이 따로 빼서 정리합니다.
-  다른 class 에서 사용되지않는다면 `private`를 꼭 붙입니다.
-  일반적인 상수를 단순히 정의할때는 `struct` 대신 `enum`을 사용해줍니다.
-  
-  - Snapkit 등에서 autolayout을 설정할 때 상수는 위쪽에 `Metric`으로 빼줍니다.
-  - 여러번 쓰이는 폰트는 `Font`로 빼줍니다
-  - 테이블뷰 등의 Section 관련은 `Section`으로 빼줍니다.
-  - 테이블뷰 등의 row 관련은 `Row`로 빼줍니다.
-  - 그외 내부적으로 쓰이는 상수는 `Constant`로 빼줍니다.
-
-  ```swift
-    private enum Metric {
-      static let avatarLength = 3.f
-      ...
-    }
-    
-    private enum Font {
-      static let titleLabel = UIFont.boldSystemFont(ofSize: 14)
-      ...
-    }
-    
-    private enum Section {
-      static let managers = 0
-      static let users = 1
-      ...
-    }
-    
-    private enum Row {
-      static let name = 0 // managers 섹션의 0번째 row
-      static let username = 0 // users 섹션의 0번째 row
-      ...
-    }
-    
-    private enum Constant {
-      static let maxLinesWithOnlyText = 2
-      ...
-    }
-  ```
-- Localize 상수는 기존 상수 규칙과 다르게, enum - case로 정리합니다. 규칙은 다음과 같습니다.
-   ```swift
-   private enum Localized {
-    case leavedThread
-    case managersCount(String)
-    ...
-    
-    var rawValue: String {
-      switch self {
-        case .leaveThread: return "thread.header.leave_thread".localized
-        case .managersCount(let count): return "team_chat_info.manager_list.title".localized(with: count)
-        ...
-      }
-    }
-  }
   ```
 
 ### Metric 명명 규칙

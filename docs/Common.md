@@ -454,6 +454,62 @@
     if optionalBoolValue == false { ... }
   ```
 
+### 상수 선언 규칙
+
+- 코드 상단에 `private`로 정의하여 일반적인 상수를 단순히 정의할때는 `struct` 대신 `enum`을 사용해줍니다.
+  Generic 사용 시 class 내부에서 static 선언이 어렵기 때문에 class 밖에서 사용합니다.
+  
+  - Snapkit 등에서 autolayout을 설정할 때 상수는 위쪽에 `Metric`으로 빼줍니다.
+  - 여러번 쓰이는 폰트는 `Font`로 빼줍니다
+  - 테이블뷰 등의 Section 관련은 `Section`으로 빼줍니다.
+  - 테이블뷰 등의 row 관련은 `Row`로 빼줍니다.
+  - 그외 내부적으로 쓰이는 상수는 `Constant`로 빼줍니다.
+
+  ```swift
+    private enum Metric {
+      static let avatarLength = 3.f
+      ...
+    }
+    
+    private enum Font {
+      static let titleLabel = UIFont.boldSystemFont(ofSize: 14)
+      ...
+    }
+    
+    private enum Section {
+      static let managers = 0
+      static let users = 1
+      ...
+    }
+    
+    private enum Row {
+      static let name = 0 // managers 섹션의 0번째 row
+      static let username = 0 // users 섹션의 0번째 row
+      ...
+    }
+    
+    private enum Constant {
+      static let maxLinesWithOnlyText = 2
+      ...
+    }
+  ```
+- Localize 상수는 기존 상수 규칙과 다르게, enum - case로 정리합니다. 규칙은 다음과 같습니다.
+   ```swift
+   private enum Localized {
+    case leavedThread
+    case managersCount(String)
+    ...
+    
+    var rawValue: String {
+      switch self {
+        case .leaveThread: return "thread.header.leave_thread".localized
+        case .managersCount(let count): return "team_chat_info.manager_list.title".localized(with: count)
+        ...
+      }
+    }
+  }
+  ```
+
 ### RxSwift 스케쥴러 지정 규칙
 
 - `Observable`에 대해서 `subscribe(on:)`과 `observe(on:)` 함수를 호출해 어떤 어떤 스케쥴러에서 작동할지 지정할 수 있는데, 이를 `Observable`을 생성하는 곳이 아닌 생성된 `Observable`을 사용하는 곳에서 지정합니다.
