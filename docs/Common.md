@@ -36,21 +36,22 @@
 
 - `guard`는 코드에서 분기를 빨리 끝낼 때, 과도한 조건문 복잡도가 생길 때 사용합니다.
 - `guard ~ else` 문이 한줄에 써진다면, 한줄로 둔다
+- `Swift 5.7`부터 Shorthand syntax 사용이 가능하여 Optional Binding에 단축 구문을 사용합니다.
 
   ```swift
     // Preferred
-    var name: String?
-    guard let name else { return }
+    var number: Int?
+    guard let number else { return }
   
     // Not Preffered
-    var name: String?
-    guard let name = name else { return }
+    var number: Int?
+    guard let number = number else { return }
   ```
   
 - `guard`의 condition이 하나이고, `else`가 여러줄이라면 다음과 같이 사용합니다.
 
   ```swift
-    guard let count else {
+    guard let number else {
       ....
       return
     }
@@ -60,21 +61,21 @@
 
   ```swift
     // Preferred  
-    guard let count, count > 0  else {
+    guard let number, number > 0  else {
       ....
       return
     }
   
     guard 
-      let interactor = self.basicInteractor,
-      let router = self.basicRouter,
-      let view = self.basicView
+      let name,
+      let number,
+      isFavorited
     else { return }
   
     // Not Preffered
-    guard let interactor = self.basicInteractor,
-      let router = self.basicRouter,
-      let view = self.basicView
+    guard let name,
+      let number,
+      isFavorited
     else {
       return
     }
@@ -83,9 +84,9 @@
 - `guard`가 끝난 이후, 한 줄 띄우고 코드를 작성합니다.
 
     ```swift
-    guard let count else { return }
+    guard let number else { return }
     
-    if count > 0 {
+    if number > 0 {
       ...
     } else {
       ...
@@ -95,11 +96,11 @@
 - `guard`가 중간에 오는 경우, 위 아래로 한줄씩 띄우고 코드를 작성합니다.
 
     ```swift
-    let count: Int? = 0
+    let number: Int? = 0
     
-    guard let count else { return }
+    guard let number else { return }
     
-    if count > 0 {
+    if number > 0 {
       ...
     } else {
     ...
@@ -112,7 +113,7 @@
 - 더이상 상속이 일어나지 않는 class는 `final`을 붙여서 명시해줍니다.
   
   ```swift
-    final class ChannelViewController {
+    final class Channel {
       ...
     }
   ```
@@ -123,8 +124,8 @@
 - `fileprivate`는 필요한 경우가 아니면 피하고, `private`으로 써줍니다.
 
   ```swift
-    final class ChannelViewController {
-      private var count = 0
+    final class Channel {
+      private var number = 0
       ...
     }
   
@@ -134,19 +135,19 @@
 
   ```swift
     // Preferred
-    func ChannelFunction(
-      a: String,
-      b: Int,
-      c: Member
+    func changeChannel(
+      name: String,
+      number: Int,
+      isFavorited: Bool
     ) {
       ...
     }
     
     // Not Preferred
-    func ChannelFunction(
-      a: String,
-      b: Int,
-      c: Member) {
+    func changeChannel(
+      name: String,
+      number: Int,
+      isFavorited: Bool) {
       ...
     }
   ```
@@ -156,49 +157,41 @@
 - 모든 `case` 내의 코드가 한줄이고 return 문이라면 붙여서 사용합니다.
   ```swift
   // Preferred
-  switch bubbleOption {
-  case .top:
-    return 10.f
-  case .bottom:
-    return 20.f
-  }
-
-  // Preferred
-  switch bubbleOption {
-  case .top: return 10.f
-  case .bottom: return 20.f
+  switch channelNumber {
+  case .main: return 0
+  case .sub: return 1
   }
 
   // Not Preferred
-  switch action {
-  case .top:
-    print("top")
-  case .bottom:
-    print("bottom")
+  switch channelNumber {
+  case .main:
+    return 0
+  case .sub:
+    return 1
   }
   ```
 
-- 그 외의 경우는 다음과 같이 모두 줄내림 합니다.
+- 단, switch 문 case 내 로직이 포함되는 경우 아래와 같이 줄내림 후 한 줄 띄우고 다음 case를 작성합니다.
   ```swift
   // Preferred
-  switch action {
-  case .routeHome:
-    guard state.routes.count != 0 else { return }
+  switch checkChannel {
+  case .main:
+    guard channel.number != 0 else { return }
 
-    state.routes.append(.home)
+    channel.changeChannel(number: 0)
 
-  case .routeFeed:
-    state.routes.append(.feed)
+  case .sub:
+    channel.changeChannel(number: 1)
   }
 
   // Not Preferred
-  switch action {
-  case .routeHome:
-    guard state.routes.count != 0 else { return }
+  switch checkChannel {
+  case .main:
+    guard channel.number != 0 else { return }
 
-    state.routes.append(.home)
-  case .routeFeed:
-    state.routes.append(.feed)
+    channel.changeChannel(number: 0)
+  case .sub:
+    channel.changeChannel(number: 1)
   }
   ```
   
@@ -209,22 +202,22 @@
   - `||`, `&&`는 한줄 내에서 줄내림 된거처럼 한번 더 인덴트를 넣어줍니다.
 
   ```swift
-    if let test = test,
-      let count = count,
-      test > 0
-        || count > 0
-        || test == count,
-      let check = check {
+    if let currentNumber,
+      let number = channel.number,
+      currentNumber > 0
+        || number > 0
+        || currentNumber == number,
+      let isFavorited = isFavorited {
       ....
     }
     
     guard 
-      let test = test,
-      let count = count,
-      test > 0
-        || count > 0
-        || test == count,
-      let check = check {
+      let currentNumber,
+      let number = channel.number,
+      currentNumber > 0
+        || number > 0
+        || currentNumber == number,
+      let isFavorited = isFavorited {
       ....
     }
         
@@ -236,32 +229,32 @@
 
   ```swift
     // Preferred
-    if count > 0
-      || check == ture {
+    if number > 0
+      || isFavorited == ture {
       ...
     }
     
-    var text = "test"
+    var name = "this"
       + " is"
-      + " perfect"
+      + " main"
       
-    let isSuccess = !isEmpty
-      && isValid
-      && text.count > 5
+    let isSuccess = !channel.isEmpty
+      && isFavorited
+      && channel.number > 0
     
     // Not Preferred
-    if count > 0 ||
-      check == ture {
+    if number > 0 ||
+      isFavorited == ture {
       ...
     }
     
-    var text = "test" + 
+    var name = "this" + 
       " is" + 
-      " perfect"
+      " main"
       
-    let isSuccess = !isEmpty &&
-      isValid && 
-      text.count > 5
+    let isSuccess = !channel.isEmpty &&
+      isFavorited && 
+      channel.number > 5
   ```
 
 ### 삼항연산자 규칙
@@ -270,22 +263,22 @@
 
   ```swift
     // Preferred    
-    return test == 0 ? 0 : 1
+    return number == 0 ? .main : .sub
     
-    var result = count > 0 ? a : b
+    var channel = number == 0 ? .main : .sub
     
     // Not Preferred
-    if test == 0 {
-      return 0
+    if number == 0 {
+      return .main
     } else {
-      return 1
+      return .sub
     }
     
-    var result = 0
-    if count > 0 {
-      result = a
+    var result: Channel
+    if number > 0 {
+      result = .main
     } else {
-      result = b
+      result = .sub
     }
   ```
 
@@ -293,26 +286,26 @@
 
   ```swift
     // Preferred
-    return test == 0
-      ? 0 : 1
+    return number == 0
+      ? .main : .sub
       
     // Not Preferred
-    return test == 0 ? 
-      0 : 1
+    return number == 0 ? 
+      .main : .sub
   ```
   
 - 조건에 따른 단순 분기일 때는 삼항연산자를 피해줍니다.
 
   ```swift
     // Preferred
-    if check == true {
-      self.showSuccess()
+    if isFavorited {
+      channel.turnOn()
     } else {
-      self.showFail()
+      channel.turnOff()
     }
       
     // Not Preferred
-    check == true ? self.showSuccess() : self.showFail()
+    isFavorited ? channel.turnOn() : channel.turnOff()
   ```
 
 - 삼항 연산자가 너무 길어질 경우 가독성을 위해 분리해줍니다.

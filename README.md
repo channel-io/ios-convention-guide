@@ -10,6 +10,6 @@
 - [ ] What is next?
 
 ## 목록
-* [공통](./docs/Common.md)
-* [UIKit](./docs/UIKit.md)
-* [SwiftUI](./docs/SwiftUI.md)
+* [공통](./docs/Common.md) - 모든 Swift 코드에서 준수해야되는 컨벤션입니다.
+* [UIKit](./docs/UIKit.md) - UIKit 코드에서 준수해야되는 컨벤션입니다.
+* [SwiftUI](./docs/SwiftUI.md) - SwiftUI 코드에서 준수해야되는 컨벤션입니다.
