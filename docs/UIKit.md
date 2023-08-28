@@ -1,12 +1,11 @@
 # UIKit
 
 ## 목차
-[Snapkit 관련 규칙](#Snapkit-관련-규칙) </br>
-[상수 선언 규칙](#상수-선언-규칙)</br>
-[Metric 명명 규칙](#Metric-명명-규칙)</br>
+[Snapkit 관련 규칙](#snapkit-관련-규칙) </br>
+[Metric 명명 규칙](#metric-명명-규칙)</br>
 [super 함수 호출시 줄내림 규칙](#super-함수-호출시-줄내림-규칙)</br>
-[View property 이니셜라이징 규칙](#View-property-이니셜라이징-규칙)</br>
-[Subview 추가 규칙](#Subview-추가-규칙)</br>
+[View property 이니셜라이징 규칙](#view-property-이니셜라이징-규칙)</br>
+[Subview 추가 규칙](#subview-추가-규칙)</br>
 
 ## 코드 컨벤션
   
