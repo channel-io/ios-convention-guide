@@ -82,7 +82,7 @@
       static let nameLabelTopBottom = 3.f
       static let avatarViewTopLeading = 3.f
       static let textViewLeadingTrailing = 3.f
-      static let iamgeViewEdge = 6.f
+      static let imageViewEdge = 6.f
       static let imageViewLength = 7.f
     }
     
