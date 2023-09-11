@@ -36,7 +36,7 @@
 ### Guard 규칙
 
 - `guard`는 코드에서 분기를 빨리 끝낼 때, 과도한 조건문 복잡도가 생길 때 사용합니다.
-- `guard ~ else` 문이 한줄에 써진다면, 한줄로 둔다
+- `guard ~ else` 문이 한줄에 써진다면, 한줄로 사용합니다.
 - `Swift 5.7`부터 Shorthand syntax 사용이 가능하여 Optional Binding에 단축 구문을 사용합니다.
 
   ```swift
