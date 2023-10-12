@@ -32,7 +32,7 @@
 
 - Indent는 2칸으로 지정합니다.
 - Xcode에서 **Preferences -> Text Editing -> Display -> Line wrapping** 부분을 2 spaces로 설정해서 사용해주세요.
-- Xcode에서 **Preferences -> Text Editing -> Indentation** 부분의 **Prefer Indent Using**부분을 'Spaces'로, **Tab Width**와 **Indent Width** 부분을 2 spaces로 설정해서 사용해주세요.
+- Xcode에서 **Preferences -> Text Editing -> Indentation** 부분의 **Prefer Indent Using** 부분을 'Spaces'로, **Tab Width**와 **Indent Width** 부분을 2 spaces로 설정해서 사용해주세요.
 
 ### Guard 규칙
 
