@@ -82,6 +82,21 @@
     }
   ```
   
+- associated values를 갖는 enum 사용 시 guard case let를 사용합니다.
+
+  ```swift
+    // Preferred  
+    guard case let .someCase(param1, param2) else {
+      ....
+      return
+    }
+  
+    // Not Preffered
+    guard case .someCase(let param1, let param2) else {
+      return
+    }
+  ```
+
 - `guard`가 끝난 이후, 한 줄 띄우고 코드를 작성합니다.
 
     ```swift
